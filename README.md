@@ -16,9 +16,10 @@ Simple [PowerToys Run](https://learn.microsoft.com/windows/powertoys/run) experi
 
 ## Installation
 
-- Download the [latest release](https://github.com/davidegiacometti/PowerToys-Run-VisualStudio/releases/) choosing the correct architecture based on your machine: `x64` (more common) or `ARM64`
+- Download the [latest release](https://github.com/davidegiacometti/PowerToys-Run-VisualStudio/releases/) by selecting the architecture that matches your machine: `x64` (more common) or `ARM64`
+- Close PowerToys
 - Extract the archive to `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`
-- Restart PowerToys
+- Open PowerToys
 
 ## Screenshots
 

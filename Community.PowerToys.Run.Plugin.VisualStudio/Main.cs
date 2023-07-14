@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -92,6 +93,19 @@ namespace Community.PowerToys.Run.Plugin.GitKraken
                     Action = _ =>
                     {
                         Helper.OpenInShell(container.Instance.InstancePath, container.FullPath, runAs: Helper.ShellRunAsType.Administrator);
+                        return true;
+                    },
+                },
+                new ContextMenuResult
+                {
+                    Title = "Open containing folder (Ctrl+Shift+E)",
+                    Glyph = "\xE838",
+                    FontFamily = "Segoe MDL2 Assets",
+                    AcceleratorKey = Key.E,
+                    AcceleratorModifiers = ModifierKeys.Control | ModifierKeys.Shift,
+                    Action = _ =>
+                    {
+                        Helper.OpenInShell(Path.GetDirectoryName(container.FullPath));
                         return true;
                     },
                 },
