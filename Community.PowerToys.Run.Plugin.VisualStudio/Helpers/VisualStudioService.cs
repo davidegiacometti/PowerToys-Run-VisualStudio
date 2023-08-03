@@ -47,6 +47,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
                     {
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
+                        CreateNoWindow = true,
                     };
 
                     using var process = Process.Start(startInfo);
