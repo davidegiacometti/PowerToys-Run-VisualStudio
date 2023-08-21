@@ -120,10 +120,14 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
         private static string? GetApplicationPrivateSettingsPathByInstanceId(string instanceId)
         {
             var dataPath = Environment.ExpandEnvironmentVariables(VisualStudioDataDir);
-            var directory = Directory.EnumerateDirectories(dataPath, $"*{instanceId}", SearchOption.TopDirectoryOnly).ToArray();
+            var directory = Directory.EnumerateDirectories(dataPath, $"*{instanceId}", SearchOption.TopDirectoryOnly)
+                .Select(d => new DirectoryInfo(d))
+                .Where(d => !d.Name.StartsWith("SettingsBackup_", StringComparison.Ordinal))
+                .ToArray();
+
             if (directory.Length == 1)
             {
-                var applicationPrivateSettingspath = Path.Combine(directory[0], "ApplicationPrivateSettings.xml");
+                var applicationPrivateSettingspath = Path.Combine(directory[0].FullName, "ApplicationPrivateSettings.xml");
 
                 if (File.Exists(applicationPrivateSettingspath))
                 {
