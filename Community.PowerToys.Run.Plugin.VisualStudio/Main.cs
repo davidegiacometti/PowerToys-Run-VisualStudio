@@ -92,7 +92,7 @@ namespace Community.PowerToys.Run.Plugin.GitKraken
                     AcceleratorModifiers = ModifierKeys.Control | ModifierKeys.Shift,
                     Action = _ =>
                     {
-                        Helper.OpenInShell(container.Instance.InstancePath, container.FullPath, runAs: Helper.ShellRunAsType.Administrator);
+                        Helper.OpenInShell(container.Instance.InstancePath, $"\"{container.FullPath}\"", runAs: Helper.ShellRunAsType.Administrator);
                         return true;
                     },
                 },

@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.ComponentModel;
 using System.IO;
 using Wox.Infrastructure;
 using Wox.Plugin;
@@ -41,7 +42,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Components
                 ContextData = this,
                 Action = _ =>
                 {
-                    Helper.OpenInShell(Instance.InstancePath, FullPath);
+                    Helper.OpenInShell(Instance.InstancePath, $"\"{FullPath}\"");
                     return true;
                 },
             };
