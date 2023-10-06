@@ -12,7 +12,7 @@ using Microsoft.PowerToys.Settings.UI.Library;
 using Wox.Infrastructure;
 using Wox.Plugin;
 
-namespace Community.PowerToys.Run.Plugin.GitKraken
+namespace Community.PowerToys.Run.Plugin.VisualStudio
 {
     public class Main : IPlugin, ISettingProvider, IContextMenu
     {
