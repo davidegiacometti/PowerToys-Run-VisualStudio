@@ -41,7 +41,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Components
                 ContextData = this,
                 Action = _ =>
                 {
-                    Helper.OpenInShell(Instance.InstancePath, FullPath);
+                    Helper.OpenInShell(Instance.InstancePath, $"\"{FullPath}\"");
                     return true;
                 },
             };

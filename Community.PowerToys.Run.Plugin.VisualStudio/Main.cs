@@ -12,7 +12,7 @@ using Microsoft.PowerToys.Settings.UI.Library;
 using Wox.Infrastructure;
 using Wox.Plugin;
 
-namespace Community.PowerToys.Run.Plugin.GitKraken
+namespace Community.PowerToys.Run.Plugin.VisualStudio
 {
     public class Main : IPlugin, ISettingProvider, IContextMenu
     {
@@ -92,7 +92,7 @@ namespace Community.PowerToys.Run.Plugin.GitKraken
                     AcceleratorModifiers = ModifierKeys.Control | ModifierKeys.Shift,
                     Action = _ =>
                     {
-                        Helper.OpenInShell(container.Instance.InstancePath, container.FullPath, runAs: Helper.ShellRunAsType.Administrator);
+                        Helper.OpenInShell(container.Instance.InstancePath, $"\"{container.FullPath}\"", runAs: Helper.ShellRunAsType.Administrator);
                         return true;
                     },
                 },
