@@ -16,6 +16,8 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
 {
     public class Main : IPlugin, ISettingProvider, IContextMenu
     {
+        public static string PluginID => "D0998A1863424336A86A2B6E936C0E8E";
+
         private const string ShowPrerelease = nameof(ShowPrerelease);
         private const bool ShowPrereleaseDefaultValue = true;
         private readonly VisualStudioService _visualStudioService;
