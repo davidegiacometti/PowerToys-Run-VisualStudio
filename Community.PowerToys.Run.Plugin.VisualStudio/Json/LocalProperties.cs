@@ -3,7 +3,7 @@
 
 namespace Community.PowerToys.Run.Plugin.VisualStudio.Json
 {
-    public class LocalProperties
+    public sealed class LocalProperties
     {
         public required string FullPath { get; set; }
     }

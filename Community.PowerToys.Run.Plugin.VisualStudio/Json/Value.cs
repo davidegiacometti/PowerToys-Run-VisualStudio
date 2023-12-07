@@ -5,7 +5,7 @@ using System;
 
 namespace Community.PowerToys.Run.Plugin.VisualStudio.Json
 {
-    public class Value
+    public sealed class Value
     {
         public required LocalProperties LocalProperties { get; set; }
 

@@ -31,7 +31,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Components
             var codeContainersString = GetCodeContainersString();
             if (codeContainersString != null)
             {
-                var codeContainers = JsonSerializer.Deserialize<List<Json.CodeContainer>>(codeContainersString);
+                var codeContainers = JsonSerializer.Deserialize(codeContainersString, Json.CodeContainerSerializerContext.Default.ListCodeContainer);
                 if (codeContainers != null)
                 {
                     foreach (var c in codeContainers)

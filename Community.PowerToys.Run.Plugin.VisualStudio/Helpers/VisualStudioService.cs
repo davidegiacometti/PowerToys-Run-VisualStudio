@@ -63,7 +63,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
                         continue;
                     }
 
-                    var instancesJson = JsonSerializer.Deserialize<List<Json.VisualStudioInstance>>(output);
+                    var instancesJson = JsonSerializer.Deserialize(output, Json.VisualStudioInstanceSerializerContext.Default.ListVisualStudioInstance);
                     if (instancesJson == null)
                     {
                         continue;

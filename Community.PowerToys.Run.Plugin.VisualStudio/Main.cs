@@ -1,9 +1,10 @@
-﻿// Copyright (c) Davide Giacometti. All rights reserved.
+// Copyright (c) Davide Giacometti. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Community.PowerToys.Run.Plugin.VisualStudio.Components;
@@ -16,10 +17,12 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
 {
     public class Main : IPlugin, ISettingProvider, IContextMenu
     {
-        public static string PluginID => "D0998A1863424336A86A2B6E936C0E8E";
-
         private const string ShowPrerelease = nameof(ShowPrerelease);
         private const bool ShowPrereleaseDefaultValue = true;
+        private static readonly string _pluginName = Assembly.GetExecutingAssembly().GetName().Name ?? string.Empty;
+
+        public static string PluginID => "D0998A1863424336A86A2B6E936C0E8E";
+
         private readonly VisualStudioService _visualStudioService;
         private bool _showPrerelease;
 
@@ -92,6 +95,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
                     FontFamily = "Segoe Fluent Icons,Segoe MDL2 Assets",
                     AcceleratorKey = Key.Enter,
                     AcceleratorModifiers = ModifierKeys.Control | ModifierKeys.Shift,
+                    PluginName = _pluginName,
                     Action = _ =>
                     {
                         Helper.OpenInShell(container.Instance.InstancePath, $"\"{container.FullPath}\"", runAs: Helper.ShellRunAsType.Administrator);
@@ -105,6 +109,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
                     FontFamily = "Segoe Fluent Icons,Segoe MDL2 Assets",
                     AcceleratorKey = Key.E,
                     AcceleratorModifiers = ModifierKeys.Control | ModifierKeys.Shift,
+                    PluginName = _pluginName,
                     Action = _ =>
                     {
                         Helper.OpenInShell(Path.GetDirectoryName(container.FullPath));

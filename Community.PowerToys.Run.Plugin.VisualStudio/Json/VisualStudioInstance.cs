@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Community.PowerToys.Run.Plugin.VisualStudio.Json
 {
-    public class VisualStudioInstance
+    public sealed class VisualStudioInstance
     {
         [JsonPropertyName("instanceId")]
         public required string InstanceId { get; set; }
