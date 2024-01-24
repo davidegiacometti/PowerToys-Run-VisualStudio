@@ -18,5 +18,8 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Json
 
         [JsonPropertyName("displayName")]
         public required string DisplayName { get; set; }
+
+        [JsonPropertyName("catalog")]
+        public required Catalog Catalog { get; set; }
     }
 }

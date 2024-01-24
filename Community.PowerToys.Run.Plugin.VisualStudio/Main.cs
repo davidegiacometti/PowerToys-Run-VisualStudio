@@ -18,13 +18,16 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
     public class Main : IPlugin, ISettingProvider, IContextMenu
     {
         private const string ShowPrerelease = nameof(ShowPrerelease);
+        private const string ExcludedVersions = nameof(ExcludedVersions);
         private const bool ShowPrereleaseDefaultValue = true;
+        private const string ExcludedVersionsDefaultValue = "";
         private static readonly string _pluginName = Assembly.GetExecutingAssembly().GetName().Name ?? string.Empty;
 
         public static string PluginID => "D0998A1863424336A86A2B6E936C0E8E";
 
         private readonly VisualStudioService _visualStudioService;
         private bool _showPrerelease;
+        private string _excludedVersions;
 
         public string Name => "Visual Studio";
 
@@ -32,23 +35,32 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
 
         public IEnumerable<PluginAdditionalOption> AdditionalOptions => new List<PluginAdditionalOption>
         {
-            new PluginAdditionalOption
+            new()
             {
                 Key = ShowPrerelease,
                 Value = ShowPrereleaseDefaultValue,
                 DisplayLabel = "Show prerelease",
                 DisplayDescription = "Include results from prerelease",
             },
+            new()
+            {
+                PluginOptionType = PluginAdditionalOption.AdditionalOptionType.Textbox,
+                Key = ExcludedVersions,
+                TextValue = ExcludedVersionsDefaultValue,
+                DisplayLabel = "Excluded versions",
+                DisplayDescription = "Add multiple versions separated by space. Example: 2019 2022",
+            },
         };
 
         public Main()
         {
+            _excludedVersions = ExcludedVersionsDefaultValue;
             _visualStudioService = new VisualStudioService();
         }
 
         public void Init(PluginInitContext context)
         {
-            _visualStudioService.InitInstances();
+            ReloadVisualStudioInstances();
         }
 
         public List<Result> Query(Query query)
@@ -74,9 +86,23 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
 
         public void UpdateSettings(PowerLauncherPluginSettings settings)
         {
-            _showPrerelease = settings != null && settings.AdditionalOptions != null
-                ? settings.AdditionalOptions.FirstOrDefault(x => x.Key == ShowPrerelease)?.Value ?? ShowPrereleaseDefaultValue
-                : ShowPrereleaseDefaultValue;
+            var oldExcludedVersions = _excludedVersions;
+
+            if (settings != null && settings.AdditionalOptions != null)
+            {
+                _showPrerelease = settings.AdditionalOptions.FirstOrDefault(x => x.Key == ShowPrerelease)?.Value ?? ShowPrereleaseDefaultValue;
+                _excludedVersions = settings.AdditionalOptions.FirstOrDefault(x => x.Key == ExcludedVersions)?.TextValue ?? ExcludedVersionsDefaultValue;
+            }
+            else
+            {
+                _showPrerelease = ShowPrereleaseDefaultValue;
+                _excludedVersions = ExcludedVersionsDefaultValue;
+            }
+
+            if (oldExcludedVersions != _excludedVersions)
+            {
+                ReloadVisualStudioInstances();
+            }
         }
 
         public List<ContextMenuResult> LoadContextMenus(Result selectedResult)
@@ -88,7 +114,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
 
             return new List<ContextMenuResult>
             {
-                new ContextMenuResult
+                new()
                 {
                     Title = "Run as administrator (Ctrl+Shift+Enter)",
                     Glyph = "\xE7EF",
@@ -102,7 +128,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
                         return true;
                     },
                 },
-                new ContextMenuResult
+                new()
                 {
                     Title = "Open containing folder (Ctrl+Shift+E)",
                     Glyph = "\xE838",
@@ -117,6 +143,11 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
                     },
                 },
             };
+        }
+
+        private void ReloadVisualStudioInstances()
+        {
+            _visualStudioService.InitInstances(_excludedVersions.Split(' ').ToArray());
         }
     }
 }

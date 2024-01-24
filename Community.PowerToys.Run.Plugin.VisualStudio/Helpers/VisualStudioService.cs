@@ -25,7 +25,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
         {
         }
 
-        public void InitInstances()
+        public void InitInstances(string[] excludedVersions)
         {
             var paths = new string?[] { null, VsWhereDir };
             var exceptions = new List<(string? Path, Exception Exception)>(paths.Length);
@@ -74,6 +74,11 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
                     {
                         var applicationPrivateSettingsPath = GetApplicationPrivateSettingsPathByInstanceId(instance.InstanceId);
                         if (string.IsNullOrWhiteSpace(applicationPrivateSettingsPath))
+                        {
+                            continue;
+                        }
+
+                        if (excludedVersions.Contains(instance.Catalog.ProductLineVersion))
                         {
                             continue;
                         }
