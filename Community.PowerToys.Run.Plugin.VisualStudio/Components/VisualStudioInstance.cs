@@ -55,7 +55,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Components
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(ApplicationPrivateSettingsPath);
 
-            var collectionNodes = xmlDoc.GetElementsByTagName("collection");
+            using var collectionNodes = xmlDoc.GetElementsByTagName("collection");
             var collectionName = "CodeContainers.Offline";
             var collectionNode = null as XmlNode;
 

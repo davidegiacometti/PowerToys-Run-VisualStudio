@@ -31,7 +31,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
 
         public string Name => "Visual Studio";
 
-        public string Description => "Open Visual Studio recents.";
+        public string Description => "Opens Visual Studio recents";
 
         public IEnumerable<PluginAdditionalOption> AdditionalOptions => new List<PluginAdditionalOption>
         {
