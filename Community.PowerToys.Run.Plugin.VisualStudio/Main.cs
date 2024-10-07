@@ -9,13 +9,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Community.PowerToys.Run.Plugin.VisualStudio.Components;
 using Community.PowerToys.Run.Plugin.VisualStudio.Helpers;
+using Community.PowerToys.Run.Plugin.VisualStudio.Properties;
 using Microsoft.PowerToys.Settings.UI.Library;
 using Wox.Infrastructure;
 using Wox.Plugin;
 
 namespace Community.PowerToys.Run.Plugin.VisualStudio
 {
-    public class Main : IPlugin, ISettingProvider, IContextMenu
+    public class Main : IPlugin, IPluginI18n, ISettingProvider, IContextMenu
     {
         private const string ShowPrerelease = nameof(ShowPrerelease);
         private const string ExcludedVersions = nameof(ExcludedVersions);
@@ -29,9 +30,9 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
         private bool _showPrerelease;
         private string _excludedVersions;
 
-        public string Name => "Visual Studio";
+        public string Name => Resources.PluginName;
 
-        public string Description => "Opens Visual Studio recents";
+        public string Description => Resources.PluginDescription;
 
         public IEnumerable<PluginAdditionalOption> AdditionalOptions => new List<PluginAdditionalOption>
         {
@@ -39,18 +40,22 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
             {
                 Key = ShowPrerelease,
                 Value = ShowPrereleaseDefaultValue,
-                DisplayLabel = "Show prerelease",
-                DisplayDescription = "Include results from prerelease",
+                DisplayLabel = Resources.Option_ShowPrerelease_Label,
+                DisplayDescription = Resources.Option_ShowPrerelease_Description,
             },
             new()
             {
                 PluginOptionType = PluginAdditionalOption.AdditionalOptionType.Textbox,
                 Key = ExcludedVersions,
                 TextValue = ExcludedVersionsDefaultValue,
-                DisplayLabel = "Excluded versions",
-                DisplayDescription = "Add multiple versions separated by space. Example: 2019 2022",
+                DisplayLabel = Resources.Option_ExcludedVersions_Label,
+                DisplayDescription = Resources.Option_ExcludedVersions_Description,
             },
         };
+
+        public string GetTranslatedPluginTitle() => Resources.PluginName;
+
+        public string GetTranslatedPluginDescription() => Resources.PluginDescription;
 
         public Main()
         {
@@ -116,7 +121,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
             {
                 new()
                 {
-                    Title = "Run as administrator (Ctrl+Shift+Enter)",
+                    Title = Resources.Action_RunAsAdministrator,
                     Glyph = "\xE7EF",
                     FontFamily = "Segoe Fluent Icons,Segoe MDL2 Assets",
                     AcceleratorKey = Key.Enter,
@@ -130,7 +135,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
                 },
                 new()
                 {
-                    Title = "Open containing folder (Ctrl+Shift+E)",
+                    Title = Resources.Action_OpenContainingFolder,
                     Glyph = "\xE838",
                     FontFamily = "Segoe Fluent Icons,Segoe MDL2 Assets",
                     AcceleratorKey = Key.E,

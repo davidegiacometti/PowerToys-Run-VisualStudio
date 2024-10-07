@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using Community.PowerToys.Run.Plugin.VisualStudio.Properties;
 using Wox.Infrastructure;
 using Wox.Plugin;
 
@@ -34,7 +35,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Components
             return new Result
             {
                 Title = Name,
-                SubTitle = $"{Instance.DisplayName}: {FullPath}",
+                SubTitle = string.Format(Resources.Result_Subtitle, Instance.DisplayName, FullPath),
                 IcoPath = Instance.InstancePath,
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
