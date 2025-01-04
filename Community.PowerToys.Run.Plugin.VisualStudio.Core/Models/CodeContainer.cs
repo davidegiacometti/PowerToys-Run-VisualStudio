@@ -3,11 +3,8 @@
 
 using System;
 using System.IO;
-using Community.PowerToys.Run.Plugin.VisualStudio.Properties;
-using Wox.Infrastructure;
-using Wox.Plugin;
 
-namespace Community.PowerToys.Run.Plugin.VisualStudio.Components
+namespace Community.PowerToys.Run.Plugin.VisualStudio.Core.Models
 {
     public class CodeContainer
     {
@@ -28,24 +25,6 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Components
             IsFavorite = codeContainer.Value.IsFavorite;
             LastAccessed = codeContainer.Value.LastAccessed;
             Instance = instance;
-        }
-
-        public Result ToResult(MatchResult matchResult)
-        {
-            return new Result
-            {
-                Title = Name,
-                SubTitle = string.Format(Resources.Result_Subtitle, Instance.DisplayName, FullPath),
-                IcoPath = Instance.InstancePath,
-                Score = matchResult.Score,
-                TitleHighlightData = matchResult.MatchData,
-                ContextData = this,
-                Action = _ =>
-                {
-                    Helper.OpenInShell(Instance.InstancePath, $"\"{FullPath}\"");
-                    return true;
-                },
-            };
         }
     }
 }

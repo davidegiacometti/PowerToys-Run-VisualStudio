@@ -3,8 +3,9 @@
 
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Community.PowerToys.Run.Plugin.VisualStudio.Core.Models.Json;
 
-namespace Community.PowerToys.Run.Plugin.VisualStudio.Json
+namespace Community.PowerToys.Run.Plugin.VisualStudio.Models.Json
 {
     [JsonSerializable(typeof(List<VisualStudioInstance>))]
     public sealed partial class VisualStudioInstanceSerializerContext : JsonSerializerContext

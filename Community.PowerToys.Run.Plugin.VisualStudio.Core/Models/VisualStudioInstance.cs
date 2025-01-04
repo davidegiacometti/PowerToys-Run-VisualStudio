@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Xml;
+using Community.PowerToys.Run.Plugin.VisualStudio.Json;
 
-namespace Community.PowerToys.Run.Plugin.VisualStudio.Components
+namespace Community.PowerToys.Run.Plugin.VisualStudio.Core.Models
 {
     public class VisualStudioInstance
     {
@@ -31,7 +32,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Components
             var codeContainersString = GetCodeContainersString();
             if (codeContainersString != null)
             {
-                var codeContainers = JsonSerializer.Deserialize(codeContainersString, Json.CodeContainerSerializerContext.Default.ListCodeContainer);
+                var codeContainers = JsonSerializer.Deserialize(codeContainersString, CodeContainerSerializerContext.Default.ListCodeContainer);
                 if (codeContainers != null)
                 {
                     foreach (var c in codeContainers)

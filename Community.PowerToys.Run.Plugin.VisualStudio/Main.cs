@@ -2,13 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Controls;
-using System.Windows.Input;
-using Community.PowerToys.Run.Plugin.VisualStudio.Components;
-using Community.PowerToys.Run.Plugin.VisualStudio.Helpers;
+using Community.PowerToys.Run.Plugin.VisualStudio.Core.Models;
+using Community.PowerToys.Run.Plugin.VisualStudio.Core.Services;
 using Community.PowerToys.Run.Plugin.VisualStudio.Properties;
 using Microsoft.PowerToys.Settings.UI.Library;
 using Wox.Infrastructure;
@@ -22,10 +19,10 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
         private const string ExcludedVersions = nameof(ExcludedVersions);
         private const bool ShowPrereleaseDefaultValue = true;
         private const string ExcludedVersionsDefaultValue = "";
-        private static readonly string _pluginName = Assembly.GetExecutingAssembly().GetName().Name ?? string.Empty;
 
         public static string PluginID => "D0998A1863424336A86A2B6E936C0E8E";
 
+        private readonly WoxLogger _logger;
         private readonly VisualStudioService _visualStudioService;
         private bool _showPrerelease;
         private string _excludedVersions;
@@ -59,8 +56,9 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
 
         public Main()
         {
+            _logger = new WoxLogger();
             _excludedVersions = ExcludedVersionsDefaultValue;
-            _visualStudioService = new VisualStudioService();
+            _visualStudioService = new VisualStudioService(_logger);
         }
 
         public void Init(PluginInitContext context)
@@ -112,42 +110,9 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio
 
         public List<ContextMenuResult> LoadContextMenus(Result selectedResult)
         {
-            if (selectedResult.ContextData is not CodeContainer container)
-            {
-                return new List<ContextMenuResult>();
-            }
-
-            return new List<ContextMenuResult>
-            {
-                new()
-                {
-                    Title = Resources.Action_RunAsAdministrator,
-                    Glyph = "\xE7EF",
-                    FontFamily = "Segoe Fluent Icons,Segoe MDL2 Assets",
-                    AcceleratorKey = Key.Enter,
-                    AcceleratorModifiers = ModifierKeys.Control | ModifierKeys.Shift,
-                    PluginName = _pluginName,
-                    Action = _ =>
-                    {
-                        Helper.OpenInShell(container.Instance.InstancePath, $"\"{container.FullPath}\"", runAs: Helper.ShellRunAsType.Administrator);
-                        return true;
-                    },
-                },
-                new()
-                {
-                    Title = Resources.Action_OpenContainingFolder,
-                    Glyph = "\xE838",
-                    FontFamily = "Segoe Fluent Icons,Segoe MDL2 Assets",
-                    AcceleratorKey = Key.E,
-                    AcceleratorModifiers = ModifierKeys.Control | ModifierKeys.Shift,
-                    PluginName = _pluginName,
-                    Action = _ =>
-                    {
-                        Helper.OpenInShell(Path.GetDirectoryName(container.FullPath));
-                        return true;
-                    },
-                },
-            };
+            return selectedResult.ContextData is CodeContainer codeContainer
+               ? codeContainer.ToContextMenuResults()
+               : new();
         }
 
         private void ReloadVisualStudioInstances()
