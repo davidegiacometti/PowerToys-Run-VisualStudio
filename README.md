@@ -15,7 +15,11 @@ Simple [PowerToys Run](https://learn.microsoft.com/windows/powertoys/run) experi
 - PowerToys minimum version 0.76.0
 
 ## Installation
-
+### Via [ptr](https://github.com/8LWXpg/ptr)
+```
+ptr add VisualStudio davidegiacometti/PowerToys-Run-VisualStudio
+```
+### Manual
 - Download the [latest release](https://github.com/davidegiacometti/PowerToys-Run-VisualStudio/releases/) by selecting the architecture that matches your machine: `x64` (more common) or `ARM64`
 - Close PowerToys
 - Extract the archive to `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`
