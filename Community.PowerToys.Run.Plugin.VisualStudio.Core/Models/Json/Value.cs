@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Community.PowerToys.Run.Plugin.VisualStudio.Json
+namespace Community.PowerToys.Run.Plugin.VisualStudio.Core.Models.Json
 {
     public sealed class Value
     {

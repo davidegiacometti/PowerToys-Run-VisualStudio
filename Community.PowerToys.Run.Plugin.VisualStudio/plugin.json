@@ -7,8 +7,9 @@
   "Author": "davidegiacometti",
   "Version": "1.0.0",
   "Language": "csharp",
-  "Website": "https://aka.ms/powertoys",
+  "Website": "https://github.com/davidegiacometti/PowerToys-Run-VisualStudio",
   "ExecuteFileName": "Community.PowerToys.Run.Plugin.VisualStudio.dll",
   "IcoPathDark": "Images\\VisualStudio.dark.png",
-  "IcoPathLight": "Images\\VisualStudio.light.png"
+  "IcoPathLight": "Images\\VisualStudio.light.png",
+  "DynamicLoading": true
 }

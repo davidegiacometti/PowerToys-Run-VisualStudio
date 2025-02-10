@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.PowerToys.Run.Plugin.VisualStudio.Core", "Community.PowerToys.Run.Plugin.VisualStudio.Core\Community.PowerToys.Run.Plugin.VisualStudio.Core.csproj", "{6C6DF5B0-FE78-4557-B586-607954E6D095}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -26,6 +28,14 @@ Global
 		{59418FCB-BD51-4002-ABAB-3AFE7E516E1F}.Release|ARM64.Build.0 = Release|ARM64
 		{59418FCB-BD51-4002-ABAB-3AFE7E516E1F}.Release|x64.ActiveCfg = Release|x64
 		{59418FCB-BD51-4002-ABAB-3AFE7E516E1F}.Release|x64.Build.0 = Release|x64
+		{6C6DF5B0-FE78-4557-B586-607954E6D095}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{6C6DF5B0-FE78-4557-B586-607954E6D095}.Debug|ARM64.Build.0 = Debug|ARM64
+		{6C6DF5B0-FE78-4557-B586-607954E6D095}.Debug|x64.ActiveCfg = Debug|x64
+		{6C6DF5B0-FE78-4557-B586-607954E6D095}.Debug|x64.Build.0 = Debug|x64
+		{6C6DF5B0-FE78-4557-B586-607954E6D095}.Release|ARM64.ActiveCfg = Release|ARM64
+		{6C6DF5B0-FE78-4557-B586-607954E6D095}.Release|ARM64.Build.0 = Release|ARM64
+		{6C6DF5B0-FE78-4557-B586-607954E6D095}.Release|x64.ActiveCfg = Release|x64
+		{6C6DF5B0-FE78-4557-B586-607954E6D095}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

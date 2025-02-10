@@ -8,10 +8,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Community.PowerToys.Run.Plugin.VisualStudio.Components;
-using Wox.Plugin.Logger;
+using Community.PowerToys.Run.Plugin.VisualStudio.Core.Models;
+using Community.PowerToys.Run.Plugin.VisualStudio.Models.Json;
 
-namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
+namespace Community.PowerToys.Run.Plugin.VisualStudio.Core.Services
 {
     public class VisualStudioService
     {
@@ -19,10 +19,12 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
         private const string VsWhereBin = "vswhere.exe";
         private const string VisualStudioDataDir = @"%LOCALAPPDATA%\Microsoft\VisualStudio";
 
+        private readonly ILogger _logger;
         private ReadOnlyCollection<VisualStudioInstance>? _instances;
 
-        public VisualStudioService()
+        public VisualStudioService(ILogger logger)
         {
+            _logger = logger;
         }
 
         public void InitInstances(string[] excludedVersions)
@@ -63,7 +65,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
                         continue;
                     }
 
-                    var instancesJson = JsonSerializer.Deserialize(output, Json.VisualStudioInstanceSerializerContext.Default.ListVisualStudioInstance);
+                    var instancesJson = JsonSerializer.Deserialize(output, VisualStudioInstanceSerializerContext.Default.ListVisualStudioInstance);
                     if (instancesJson == null)
                     {
                         continue;
@@ -100,7 +102,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
             {
                 foreach (var ex in exceptions)
                 {
-                    Log.Exception($"Failed to execute vswhere.exe from {ex.Path ?? "PATH"}", ex.Exception, typeof(VisualStudioService));
+                    _logger.LogError(ex.Exception, $"Failed to execute vswhere.exe from {ex.Path ?? "PATH"}", typeof(VisualStudioService));
                 }
             }
         }
@@ -122,7 +124,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
             return query.SelectMany(i => i.GetCodeContainers()).OrderBy(c => c.Name).ThenBy(c => c.Instance.IsPrerelease);
         }
 
-        private static string? GetApplicationPrivateSettingsPathByInstanceId(string instanceId)
+        private string? GetApplicationPrivateSettingsPathByInstanceId(string instanceId)
         {
             var dataPath = Environment.ExpandEnvironmentVariables(VisualStudioDataDir);
             var directory = Directory.EnumerateDirectories(dataPath, $"*{instanceId}", SearchOption.TopDirectoryOnly)
@@ -140,7 +142,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Helpers
                 }
             }
 
-            Log.Error($"Failed to find ApplicationPrivateSettings.xml for instance {instanceId}", typeof(VisualStudioService));
+            _logger.LogError($"Failed to find ApplicationPrivateSettings.xml for instance {instanceId}", typeof(VisualStudioService));
 
             return null;
         }
