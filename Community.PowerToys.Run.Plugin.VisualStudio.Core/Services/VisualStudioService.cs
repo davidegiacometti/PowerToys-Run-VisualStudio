@@ -20,11 +20,14 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Core.Services
         private const string VisualStudioDataDir = @"%LOCALAPPDATA%\Microsoft\VisualStudio";
 
         private readonly ILogger _logger;
-        private ReadOnlyCollection<VisualStudioInstance>? _instances;
+        private readonly List<VisualStudioInstance> _instances;
+
+        public ReadOnlyCollection<VisualStudioInstance> Instances => _instances.AsReadOnly();
 
         public VisualStudioService(ILogger logger)
         {
             _logger = logger;
+            _instances = [];
         }
 
         public void InitInstances(string[] excludedVersions)
@@ -71,7 +74,6 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Core.Services
                         continue;
                     }
 
-                    var instances = new List<VisualStudioInstance>(instancesJson.Count);
                     foreach (var instance in instancesJson)
                     {
                         var applicationPrivateSettingsPath = GetApplicationPrivateSettingsPathByInstanceId(instance.InstanceId);
@@ -85,10 +87,9 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Core.Services
                             continue;
                         }
 
-                        instances.Add(new VisualStudioInstance(instance, applicationPrivateSettingsPath));
+                        _instances.Add(new VisualStudioInstance(instance, applicationPrivateSettingsPath));
                     }
 
-                    _instances = new ReadOnlyCollection<VisualStudioInstance>(instances);
                     break;
                 }
                 catch (Exception ex)
@@ -114,7 +115,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Core.Services
                 return Enumerable.Empty<CodeContainer>();
             }
 
-            var query = _instances.AsQueryable();
+            var query = _instances.AsEnumerable();
 
             if (!showPrerelease)
             {
