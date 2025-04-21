@@ -34,6 +34,7 @@ namespace Community.PowerToys.Run.Plugin.VisualStudio.Core.Services
         {
             var paths = new string?[] { null, VsWhereDir };
             var exceptions = new List<(string? Path, Exception Exception)>(paths.Length);
+            _instances.Clear();
 
             foreach (var path in paths)
             {
